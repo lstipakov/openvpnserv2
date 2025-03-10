@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace OpenVpn
 {
@@ -11,6 +12,15 @@ namespace OpenVpn
         public bool logAppend { get; set; }
         public System.Diagnostics.ProcessPriorityClass priorityClass { get; set; }
 
-        public EventLog eventLog { get; set; }
+        public Action<string, EventLogEntryType> Log; // Delegate for logging
+
+        public OpenVpnServiceConfiguration(Action<string, EventLogEntryType> logAction)
+        {
+            Log = logAction;
+        }
+        public void LogMessage(string message, EventLogEntryType type = EventLogEntryType.Information)
+        {
+            Log(message, type);
+        }
     }
 }

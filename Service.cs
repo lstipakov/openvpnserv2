@@ -28,10 +28,7 @@ namespace OpenVpn
             this.AutoLog = true;
 
             _eventLog = new EventLog();
-            if (!EventLog.SourceExists(this.ServiceName))
-            {
-                EventLog.CreateEventSource(this.ServiceName, "Application");
-            }
+            // this assumes that OpenVPNService event source has been created, since it requires elevated privileges
             _eventLog.Source = this.ServiceName;
             _eventLog.Log = "Application";
 
